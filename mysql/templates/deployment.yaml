@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mysql.name" . }}
+  labels:
+    {{- include "mysql.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "mysql.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mysql.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: mysql
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.mysql.port }}
+          args: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mysql.mysqlRootPassword }}
+          volumeMounts:
+            - name: mysql-pv
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: {{ include "mysql.name" . }}-pv
+          persistentVolumeClaim:
+            claimName: {{ include "mysql.name" . }}-pvc

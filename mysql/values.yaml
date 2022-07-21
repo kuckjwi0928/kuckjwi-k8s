@@ -1,0 +1,7 @@
+mysql:
+  hostPath: "/Users/kuckjwi/mysql"
+  mysqlRootPassword: root
+  port: 3306
+image:
+  repository: mysql
+  tag: 5.7
