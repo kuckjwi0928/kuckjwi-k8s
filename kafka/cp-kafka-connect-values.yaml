@@ -1,0 +1,5 @@
+kafka:
+  bootstrapServers: PLAINTEXT://kuckjwi-cluster-kafka-cp-kafka-headless.kafka.svc.cluster.local:9092
+prometheus:
+  jmx:
+    enabled: false
