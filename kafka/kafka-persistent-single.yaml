@@ -8,17 +8,10 @@ spec:
     version: 3.1.0
     replicas: 1
     listeners:
-      - name: external
+      - name: plain
         port: 9092
-        type: nodeport
+        type: internal
         tls: false
-        configuration:
-          bootstrap:
-            nodePort: 32100
-          brokers:
-            - broker: 0
-              advertisedHost: localhost
-              nodePort: 32000
       - name: tls
         port: 9093
         type: internal
