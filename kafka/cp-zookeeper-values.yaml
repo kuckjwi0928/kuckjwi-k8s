@@ -1,4 +1,0 @@
-servers: 1
-prometheus:
-  jmx:
-    enabled: false
