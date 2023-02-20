@@ -4,6 +4,7 @@ deploy:
   kubectl:
     manifests:
       - "./kafka/kafka-persistent-single.yaml"
+      - "./metric-server/high-availability-1.21+.yaml"
   helm:
     releases:
       - name: "mysql"
