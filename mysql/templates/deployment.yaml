@@ -29,3 +29,6 @@ spec:
         - name: {{ include "mysql.name" . }}-pv
           persistentVolumeClaim:
             claimName: {{ include "mysql.name" . }}-pvc
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
