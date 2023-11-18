@@ -30,6 +30,3 @@ spec:
         - name: {{ include "postgres.name" . }}-pv
           persistentVolumeClaim:
             claimName: {{ include "postgres.name" . }}-pvc
-      securityContext:
-        runAsUser: 1000
-        fsGroup: 1000
