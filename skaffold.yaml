@@ -15,3 +15,7 @@ deploy:
         createNamespace: true
         namespace: redis
         chartPath: "./redis"
+      - name: "postgres"
+        createNamespace: true
+        namespace: postgres
+        chartPath: "./postgres"

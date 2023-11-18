@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "postgres.name" . }}
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "postgres.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgres
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.postgres.port }}
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.postgres.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgres.password }}
+          volumeMounts:
+            - name: postgres-pv
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: {{ include "postgres.name" . }}-pv
+          persistentVolumeClaim:
+            claimName: {{ include "postgres.name" . }}-pvc
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
