@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "mysql.labels" . | nindent 4 }}
 spec:
-  storageClassName: manual
+  storageClassName: {{ include "mysql.name" . }}
   capacity:
     storage: 20Gi
   accessModes:
@@ -20,7 +20,7 @@ metadata:
   labels:
     {{- include "mysql.labels" . | nindent 4 }}
 spec:
-  storageClassName: manual
+  storageClassName: {{ include "mysql.name" . }}
   accessModes:
     - ReadWriteOnce
   resources:
