@@ -1,9 +1,10 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta8
 kind: Config
 deploy:
   kubectl:
-    manifests:
-      - "./metric-server/high-availability-1.21+.yaml"
+    flags:
+      apply:
+        - "./metric-server/high-availability-1.21+.yaml"
   helm:
     releases:
       - name: "mysql"
@@ -18,3 +19,9 @@ deploy:
         createNamespace: true
         namespace: postgres
         chartPath: "./postgres"
+      - name: "kafka"
+        createNamespace: true
+        namespace: kafka
+        remoteChart: "oci://registry-1.docker.io/bitnamicharts/kafka"
+        valuesFiles:
+          - ./kafka/values.yaml

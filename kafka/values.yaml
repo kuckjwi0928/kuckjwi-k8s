@@ -1,0 +1,27 @@
+listeners:
+  client:
+    protocol: PLAINTEXT
+  controller:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+  external:
+    protocol: PLAINTEXT
+controller:
+  replicaCount: 3
+provisioning:
+  enabled: true
+  numPartitions: 1
+  replicationFactor: 3
+  topics:
+  - name: test
+externalAccess:
+  enabled: true
+  controller:
+    service:
+      domain: 127.0.0.1
+      type: NodePort
+      nodePorts:
+        - 30000
+        - 30001
+        - 30002
