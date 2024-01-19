@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: {{ include "mongo.namespace" . }}
+  name: {{ include "mongo.name" . }}
+  labels:
+    {{- include "mongo.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "mongo.name" . }}-headless-svc
+  replicas: 3
+  selector:
+    matchLabels:
+      {{- include "mongo.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mongo.labels" . | nindent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongodb
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.mongo.port }}
+          command:
+            - "mongod"
+            - "--replSet"
+            - "kuckjwi-rs"
+            - "--bind_ip"
+            - "0.0.0.0"
+          volumeMounts:
+            - name: {{ include "mongo.name" . }}-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "mongo.name" . }}-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi

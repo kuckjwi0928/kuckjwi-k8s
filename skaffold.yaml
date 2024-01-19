@@ -25,3 +25,7 @@ deploy:
         remoteChart: "oci://registry-1.docker.io/bitnamicharts/kafka"
         valuesFiles:
           - ./kafka/values.yaml
+      - name: "mongo"
+        createNamespace: true
+        namespace: mongo
+        chartPath: "./mongo"
