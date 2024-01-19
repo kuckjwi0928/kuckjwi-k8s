@@ -1,5 +1,6 @@
 mongo:
   port: 27017
+  replicaSetName: kuckjwi-rs
 image:
   repository: mongo
   tag: 5.0.9
