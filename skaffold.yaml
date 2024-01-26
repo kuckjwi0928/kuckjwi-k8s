@@ -1,10 +1,6 @@
 apiVersion: skaffold/v4beta8
 kind: Config
 deploy:
-  kubectl:
-    flags:
-      apply:
-        - "./metric-server/high-availability-1.21+.yaml"
   helm:
     releases:
       - name: "mysql"
@@ -29,3 +25,6 @@ deploy:
         createNamespace: true
         namespace: mongo
         chartPath: "./mongo"
+      - name: "metric-server"
+        remoteChart: "https://kubernetes-sigs.github.io/metrics-server"
+        charPath: "metrics-server/metrics-server"
