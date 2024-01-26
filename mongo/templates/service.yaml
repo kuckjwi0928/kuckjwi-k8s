@@ -12,48 +12,24 @@ spec:
     - name: mongo
       port: {{ .Values.mongo.port }}
       protocol: TCP
+{{ $namespace := include "mongo.namespace" . }}
+{{ $name := include "mongo.name" . }}
+{{ $port := .Values.mongo.port }}
+{{ $count := (.Values.mongo.replicaCount | int) }}
+{{ range $i := until $count }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: {{ include "mongo.namespace" . }}
-  name: {{ include "mongo.name" . }}-0-external-svc
+  namespace: {{ $namespace }}
+  name: {{ $name }}-{{$i}}-external-svc 
 spec:
   type: NodePort
   selector:
-    statefulset.kubernetes.io/pod-name: {{ include "mongo.name" . }}-0
+    statefulset.kubernetes.io/pod-name: {{ $name }}-{{ $i }}
   ports:
     - name: mongo
-      port: {{ .Values.mongo.port }}
+      port: {{ $port }}
       protocol: TCP
-      nodePort: 30010
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: {{ include "mongo.namespace" . }}
-  name: {{ include "mongo.name" . }}-1-external-svc
-spec:
-  type: NodePort
-  selector:
-    statefulset.kubernetes.io/pod-name: {{ include "mongo.name" . }}-1
-  ports:
-    - name: mongo
-      port: {{ .Values.mongo.port }}
-      protocol: TCP
-      nodePort: 30011
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: {{ include "mongo.namespace" . }}
-  name: {{ include "mongo.name" . }}-2-external-svc
-spec:
-  type: NodePort
-  selector:
-    statefulset.kubernetes.io/pod-name: {{ include "mongo.name" . }}-2
-  ports:
-    - name: mongo
-      port: {{ .Values.mongo.port }}
-      protocol: TCP
-      nodePort: 30012
+      nodePort: {{ add $i 30010 }}
+{{ end }}

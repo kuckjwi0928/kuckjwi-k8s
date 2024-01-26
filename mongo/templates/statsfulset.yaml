@@ -7,7 +7,7 @@ metadata:
     {{- include "mongo.labels" . | nindent 4 }}
 spec:
   serviceName: {{ include "mongo.name" . }}-headless-svc
-  replicas: 3
+  replicas: {{ .Values.mongo.replicaCount }}
   selector:
     matchLabels:
       {{- include "mongo.selectorLabels" . | nindent 6 }}
