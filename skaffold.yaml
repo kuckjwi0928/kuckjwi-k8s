@@ -26,5 +26,13 @@ deploy:
         namespace: mongo
         chartPath: "./mongo"
       - name: "metric-server"
-        remoteChart: "https://kubernetes-sigs.github.io/metrics-server"
-        charPath: "metrics-server/metrics-server"
+        repo: "https://kubernetes-sigs.github.io/metrics-server"
+        remoteChart: "metrics-server"
+      - name: "cert-manager"
+        createNamespace: true
+        version: 1.13.3
+        namespace: cert-manager
+        repo: "https://charts.jetstack.io"
+        remoteChart: "cert-manager"
+        setValues:
+          installCRDs: true
