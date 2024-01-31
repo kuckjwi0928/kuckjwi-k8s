@@ -1,6 +1,10 @@
 apiVersion: skaffold/v4beta8
 kind: Config
 deploy:
+  kubectl:
+    flags:
+      apply:
+        - "./self-sigend-cert/cluster-issuer.yaml"
   helm:
     releases:
       - name: "mysql"
