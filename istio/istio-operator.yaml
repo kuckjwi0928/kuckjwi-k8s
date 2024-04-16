@@ -4,7 +4,14 @@ metadata:
   namespace: istio-system
   name: istio-controlplane
 spec:
-  profile: demo
+  profile: ambient
   meshConfig:
     accessLogFile: /dev/stdout
     accessLogEncoding: TEXT
+  components:
+    ingressGateways:
+      - enabled: true
+        name: istio-ingressgateway
+    egressGateways:
+      - enabled: true
+        name: istio-egressgateway
