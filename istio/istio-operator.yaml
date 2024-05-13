@@ -4,7 +4,7 @@ metadata:
   namespace: istio-system
   name: istio-controlplane
 spec:
-  profile: ambient
+  profile: demo
   meshConfig:
     accessLogFile: /dev/stdout
     accessLogEncoding: TEXT
