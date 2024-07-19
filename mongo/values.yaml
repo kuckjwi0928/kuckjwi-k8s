@@ -4,4 +4,4 @@ mongo:
   replicaCount: 3
 image:
   repository: mongo
-  tag: 5.0.9
+  tag: 7.0.9
