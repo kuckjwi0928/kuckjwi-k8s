@@ -1,9 +1,7 @@
 # Getting started
 ## istio
 ~~~shell
-$ istioctl install ./istio/istio-operator.yaml
-$ kubectl create namespace local
-$ kubectl label namespace local istio.io/dataplane-mode=ambient
+$ istioctl operator init ./istio/istio-operator.yaml
 ~~~
 ## metric-server
 ~~~shell
